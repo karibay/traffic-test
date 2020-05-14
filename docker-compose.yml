@@ -1,0 +1,21 @@
+version: '3.3'
+
+services:
+  pdb:
+    image: "postgres:12"
+    environment:
+      - "POSTGRES_HOST_AUTH_METHOD=trust"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+  credits:
+    build: .
+    command: ./docker-entrypoint.sh
+    volumes:
+      - .:/credits
+    ports:
+      - "8005:8005"
+    depends_on:
+      - pdb
+
+volumes:
+  postgres_data:
